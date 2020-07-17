@@ -21,11 +21,12 @@ public class ContactServiceImpl implements ContactService {
 	ContactRepository phrepo;
 
 	@Override
-	public boolean saveContact(Contact contact) {
+	public Contact saveContact(Contact contact) {
 		ContactEntity entity = new ContactEntity();
 		BeanUtils.copyProperties(contact, entity);
 		ContactEntity saveEntity = phrepo.save(entity);
-		return saveEntity.getContact_id()!=null;
+		BeanUtils.copyProperties(saveEntity, contact);
+		return contact;
 	}
 
 	@Override
@@ -56,7 +57,14 @@ public class ContactServiceImpl implements ContactService {
 		return null;
 	}
 
+	@Override
+	public void deleteContactByID(Long id) {
+		phrepo.deleteById(id);
+		
+	}
+
 	
 
-		
-}
+	}
+
+	
